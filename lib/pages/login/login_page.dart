@@ -1,3 +1,4 @@
+import 'package:bpkad_checkin/pages/home/home_page.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
@@ -34,7 +35,7 @@ class LoginPage extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 30,
                           color: Colors.black,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w800,
                         ),
                       ),
                       Text(
@@ -85,7 +86,10 @@ class LoginPage extends StatelessWidget {
                       ),
                     ),
                     hintText: 'Masukkan nama username',
-                    hintStyle: TextStyle(color: Color(0xFF9CA3AF)),
+                    hintStyle: TextStyle(
+                      color: Color(0xFF9CA3AF),
+                      fontSize: 13,
+                    ),
                     filled: true,
                     fillColor: Colors.white,
                   ),
@@ -122,7 +126,10 @@ class LoginPage extends StatelessWidget {
                       ),
                     ),
                     hintText: 'Masukkan password',
-                    hintStyle: TextStyle(color: Color(0xFF9CA3AF)),
+                    hintStyle: TextStyle(
+                      color: Color(0xFF9CA3AF),
+                      fontSize: 13,
+                    ),
                     filled: true,
                     fillColor: Colors.white,
                   ),
@@ -150,7 +157,12 @@ class LoginPage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomePage()),
+                    );
+                  },
                 ),
                 SizedBox(
                   width: double.infinity,
