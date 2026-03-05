@@ -1,4 +1,4 @@
-import 'package:bpkad_checkin/pages/home/home_page.dart';
+import 'package:bpkad_checkin/pages/home_wrapper.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
@@ -158,9 +158,12 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    Navigator.push(
+                    Navigator.pushAndRemoveUntil(
                       context,
-                      MaterialPageRoute(builder: (context) => HomePage()),
+                      MaterialPageRoute(
+                        builder: (context) => const HomeWrapper(),
+                      ),
+                      (route) => false,
                     );
                   },
                 ),

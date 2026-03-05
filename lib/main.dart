@@ -1,7 +1,8 @@
+import 'package:bpkad_checkin/bloc/splash/splash_bloc.dart';
+import 'package:bpkad_checkin/pages/splash/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:bpkad_checkin/bloc/login/login_bloc.dart';
-import 'package:bpkad_checkin/pages/login/login_page.dart';
+// import 'package:bpkad_checkin/pages/home/home_wrapper.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,16 +11,14 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: "Flutter Serabuatan.ID",
       theme: ThemeData(fontFamily: "Poppins", useMaterial3: true),
       home: BlocProvider(
-        create: (context) => LoginBloc(),
-        child: const LoginPage(),
+        create: (context) => SplashBloc(),
+        child: const SplashPage(),
       ),
     );
   }
