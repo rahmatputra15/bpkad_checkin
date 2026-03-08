@@ -2,7 +2,6 @@ import 'package:bpkad_checkin/bloc/splash/splash_bloc.dart';
 import 'package:bpkad_checkin/pages/splash/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:bpkad_checkin/pages/home/home_wrapper.dart';
 
 void main() {
   runApp(const MyApp());
