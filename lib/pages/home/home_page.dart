@@ -12,16 +12,20 @@ import 'package:latlong2/latlong.dart';
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-  // static const double kantorLat = -0.889700;
-  // static const double kantorLng = 119.883770;
-  static const double kantorLat = 1.163483;
-  static const double kantorLng = 121.429668;
+  static const double kantorLat = -0.889700;
+  static const double kantorLng = 119.883770;
+  // static const double kantorLat = 1.163483;
+  // static const double kantorLng = 121.429668;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          LocationBloc(LocationService())..add(GetLocationEvent()),
+      create: (context) {
+        final bloc = LocationBloc(LocationService());
+        // Start watching location stream for real-time updates
+        bloc.add(WatchLocationEvent());
+        return bloc;
+      },
       child: Scaffold(
         backgroundColor: const Color(0xFFF6F6F8),
         body: SafeArea(
@@ -73,7 +77,7 @@ class HomePage extends StatelessWidget {
                           meter = 0;
                         }
 
-                        bool dalamRadius = meter <= 100;
+                        bool dalamRadius = meter <= 50;
 
                         return Column(
                           spacing: 20,

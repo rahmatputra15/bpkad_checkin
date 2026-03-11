@@ -7,6 +7,7 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
   final LocationService locationService;
 
   LocationBloc(this.locationService) : super(LocationInitial()) {
+    // Handle single location fetch
     on<GetLocationEvent>((event, emit) async {
       emit(LocationLoading());
 
@@ -21,6 +22,26 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
         emit(LocationError(e.toString()));
         print('Error getting location: ${e.toString()}');
       }
+    });
+
+    // Handle real-time location stream
+    on<WatchLocationEvent>((event, emit) {
+      emit(LocationLoading());
+
+      locationService.getPositionStream().listen(
+        (position) {
+          add(GetLocationEvent());
+        },
+        onError: (error) {
+          emit(LocationError(error.toString()));
+          print('Error in location stream: $error');
+        },
+      );
+    });
+
+    on<StopWatchingLocationEvent>((event, emit) {
+      // Stream will be cancelled automatically when LocationBloc is closed
+      print('Stopped watching location');
     });
   }
 }

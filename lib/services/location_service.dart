@@ -28,4 +28,17 @@ class LocationService {
     // ambil posisi
     return await Geolocator.getCurrentPosition();
   }
+
+  /// Get real-time location updates sebagai Stream
+  /// [locationSettings] untuk customize accuracy, interval, distance filter, etc.
+  Stream<Position> getPositionStream({LocationSettings? locationSettings}) {
+    return Geolocator.getPositionStream(
+      locationSettings:
+          locationSettings ??
+          const LocationSettings(
+            accuracy: LocationAccuracy.best,
+            distanceFilter: 10, // Update hanya jika bergerak >10 meter
+          ),
+    );
+  }
 }
