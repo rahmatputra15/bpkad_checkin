@@ -2,20 +2,16 @@ import 'package:bpkad_checkin/bloc/location/location_bloc.dart';
 import 'package:bpkad_checkin/bloc/location/location_event.dart';
 import 'package:bpkad_checkin/bloc/location/location_state.dart';
 import 'package:bpkad_checkin/services/location_service.dart';
+import 'package:bpkad_checkin/services/office_location_service.dart';
 import 'package:bpkad_checkin/widgets/location_status.dart';
 import 'package:bpkad_checkin/widgets/office_map_card.dart';
+import 'package:bpkad_checkin/pages/home/saved_locations_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bpkad_checkin/widgets/app_header.dart';
-import 'package:latlong2/latlong.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
-
-  static const double kantorLat = -0.889700;
-  static const double kantorLng = 119.883770;
-  // static const double kantorLat = 1.163483;
-  // static const double kantorLng = 121.429668;
 
   @override
   Widget build(BuildContext context) {
@@ -58,39 +54,23 @@ class HomePage extends StatelessWidget {
                       }
 
                       if (state is LocationLoaded) {
-                        final distance = Distance();
                         final lat = state.latitude;
                         final lng = state.longitude;
 
-                        double meter = 0;
-                        try {
-                          meter = distance.as(
-                            LengthUnit.Meter,
-                            LatLng(lat, lng),
-                            LatLng(kantorLat, kantorLng),
-                          );
-                          // Validate meter value
-                          if (meter.isNaN || meter.isInfinite) {
-                            meter = 0;
-                          }
-                        } catch (e) {
-                          meter = 0;
-                        }
-
-                        bool dalamRadius = meter <= 50;
+                        bool dalamRadius = OfficeLocationService.isInsideOffice(
+                          lat,
+                          lng,
+                        );
 
                         return Column(
                           spacing: 20,
                           children: [
-                            LocationStatus(
-                              dalamRadius: dalamRadius,
-                              meter: meter,
-                            ),
+                            LocationStatus(dalamRadius: dalamRadius, meter: 0),
                             OfficeMapCard(
-                              lat: state.latitude,
-                              lng: state.longitude,
-                              officeLat: kantorLat,
-                              officeLng: kantorLng,
+                              lat: lat,
+                              lng: lng,
+                              officeLat: OfficeLocationService.kantorLat,
+                              officeLng: OfficeLocationService.kantorLng,
                               onRefresh: () {
                                 context.read<LocationBloc>().add(
                                   GetLocationEvent(),
@@ -216,6 +196,26 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                     ],
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SavedLocationsView(),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF06B4A6),
+                      foregroundColor: Colors.white,
+                      minimumSize: const Size(double.infinity, 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(35),
+                      ),
+                    ),
+                    icon: const Icon(Icons.history),
+                    label: const Text('Lihat Lokasi Tersimpan'),
                   ),
                 ],
               ),

@@ -25,7 +25,7 @@ class HomeWrapper extends StatelessWidget {
       child: Scaffold(
         body: BlocBuilder<BottomNavBloc, BottomNavState>(
           builder: (context, state) {
-            return _pages[state.index];
+            return IndexedStack(index: state.index, children: _pages);
           },
         ),
         bottomNavigationBar: BlocBuilder<BottomNavBloc, BottomNavState>(

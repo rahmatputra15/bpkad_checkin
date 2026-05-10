@@ -109,7 +109,7 @@ class OfficeMapCard extends StatelessWidget {
                         FlutterMap(
                           options: MapOptions(
                             initialCenter: LatLng(lat!, lng!),
-                            initialZoom: 18,
+                            initialZoom: 19,
                           ),
                           children: [
                             TileLayer(
@@ -133,10 +133,10 @@ class OfficeMapCard extends StatelessWidget {
                               markers: [
                                 Marker(
                                   point: LatLng(lat!, lng!),
-                                  width: 50,
-                                  height: 50,
+                                  width: 30,
+                                  height: 30,
                                   child: Image.asset(
-                                    "images/logos/marker2.png",
+                                    "images/logos/marker3_white.png",
                                   ),
                                 ),
                               ],
